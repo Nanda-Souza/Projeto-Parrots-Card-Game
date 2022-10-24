@@ -18,10 +18,12 @@ h1 {
   color: #75b79e;
   font-weight: 700;
 }
+
 .cartas{
 display: flex;
 justify-content: center;
 align-items: center;
+max-width: 900px;
 gap: 24px;
 flex-wrap: wrap;
 padding:30px 100px;
@@ -57,10 +59,18 @@ padding:30px 100px;
   transform: rotateY(180deg);
 }
 
-.carta:hover .front-face {
+.virada .front-face {
   transform: rotateY(0deg);
 }
 
-.carta:hover .back-face {
+.virada .back-face {
+  transform: rotateY(-180deg);
+}
+
+.acertada .front-face {
+  transform: rotateY(0deg);
+}
+
+.acertada .back-face {
   transform: rotateY(-180deg);
 }

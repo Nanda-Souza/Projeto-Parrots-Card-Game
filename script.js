@@ -14,6 +14,12 @@ let nomeImagem = [
 
 let cartasJogo = [];
 
+let cartasClicadas = [];
+
+let numeroAcertos = 0;
+
+let numeroJogadas = 0;
+
 const baralhoJogo = document.querySelector(".cartas");
 baralhoJogo.innerHTML = "";
 
@@ -41,9 +47,9 @@ function IniciarJogo() {
   indice = 0;
   while (indice < cartasJogo.length){
   baralhoJogo.innerHTML += ` 
-  <div class="carta">
+  <div class="carta" onclick="virarCarta(this)">
   <div class="front-face face">
-      <img src="./imagem/${cartasJogo[indice]}.gif" alt="">
+      <img src="./imagem/${cartasJogo[indice]}.gif" class="imagemFrente" alt="">
     </div>
     <div class="back-face face">
      <img src="./imagem/back.png" alt="">
@@ -59,6 +65,53 @@ function comparador() {
 	return Math.random() - 0.5; 
 }
 // cartasJogo.sort()
+
+function virarCarta(elemento){
+    numeroJogadas++
+    const cartaVirada = elemento.querySelector(".imagemFrente").getAttribute("src");
+  
+    if (elemento.classList.contains("virada")!== true && elemento.classList.contains("acertada")!== true){
+        elemento.classList.add("virada")
+        cartasClicadas.push(cartaVirada);
+        
+    }
+    const cartasViradas = document.querySelectorAll(".virada")
+    if (cartasViradas.length == 2){
+
+        
+    if (cartasClicadas[0] !== cartasClicadas[1]){
+        
+        setTimeout(() => {
+            desvirarCartas(cartasViradas)
+            
+        }, 1000);
+    }
+    else if(cartasClicadas[0] == cartasClicadas[1]) {
+        cartasViradas[0].classList.remove("virada")
+        cartasViradas[1].classList.remove("virada")
+        cartasViradas[0].classList.add("acertada")
+        cartasViradas[1].classList.add("acertada")
+        cartasClicadas = [];
+        numeroAcertos++;
+        ganharJogo ();
+   
+    }
+    }
+  
+  console.log(cartasClicadas)
+}
+    function desvirarCartas(cartasViradas){
+        console.log(cartasViradas)
+        cartasViradas[0].classList.remove("virada")
+        cartasViradas[1].classList.remove("virada") 
+        cartasClicadas = [];
+    }
+
+    function ganharJogo (){
+        if (numeroAcertos == numero_cartas/2){
+            alert(`Você ganhou em ${numeroJogadas}  jogadas!`)
+        }
+    }
 
 console.log(cartasJogo);
 
